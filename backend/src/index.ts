@@ -1,17 +1,18 @@
-import express from 'express'
-const app = express();
-
-
-//middllewares
-app.use(express.json());
+import app from"./app.js";
+import { connectToDatabase } from "./db/connection.js";
 
 //connections and listeneres
-app.post("/hello",(req, res ,next) =>{
-    console.log(req.body.name);
-    return res.send("Hello world")
+const PORT = process.env.PORT || 3000;
+connectToDatabase()
+.then(() => {
+    app.listen(PORT,() => console.log("Connected to database"))
 })
+.catch((err)=> console.log(err));
+    
 
-app.listen(5000,() => console.log("Server listening on port"))
+
+
+
 
 
 //npm run dev
